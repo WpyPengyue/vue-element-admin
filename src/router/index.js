@@ -85,6 +85,17 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   // 404 page must be placed at the end !!!
+  {
+    path: '/book',
+    component: Layout,
+    meta: { title: '图书管理', icon: 'documentation', roles: ['admin'] },
+    redirect: '/book/create',
+    children: [{
+      path: '/book/create',
+      component: () => import('@/views/book/create'),
+      meta: { title: '上传图书', icon: 'edit', roles: ['admin'] }
+    }]
+  },
   { path: '*', redirect: '/404', hidden: true }
 ]
 
