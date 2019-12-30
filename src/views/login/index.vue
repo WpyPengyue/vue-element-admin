@@ -53,21 +53,21 @@
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
+// import { validUsername } from '@/utils/validate'
 
 export default {
   name: 'Login',
   data() {
     const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('请输入正确的用户名'))
+      if (!value || value.length === 0) {
+        callback(new Error('请输入用户名'))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('密码不能少于6位'))
+      if (value.length < 4) {
+        callback(new Error('密码不能少于4位'))
       } else {
         callback()
       }
@@ -78,7 +78,7 @@ export default {
         password: '111111'
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        username: [{ required: true, trigger: 'change', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       passwordType: 'password',
@@ -110,12 +110,15 @@ export default {
   },
   methods: {
     checkCapslock({ shiftKey, key } = {}) {
+      console.log('shiftKey:' + shiftKey + ' key:' + key)
       if (key && key.length === 1) {
-        if (shiftKey && (key >= 'a' && key <= 'z') || !shiftKey && (key >= 'A' && key <= 'Z')) {
+        if ((shiftKey && (key >= 'A' && key <= 'Z')) || (!shiftKey && (key >= 'A' && key <= 'Z'))) {
           this.capsTooltip = true
         } else {
           this.capsTooltip = false
         }
+      } else {
+        this.capsTooltip = false
       }
       if (key === 'CapsLock' && this.capsTooltip === true) {
         this.capsTooltip = false
