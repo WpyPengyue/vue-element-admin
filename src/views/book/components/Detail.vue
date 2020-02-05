@@ -8,7 +8,9 @@
       <div class="detail-container">
         <el-row>
           <warning />
-          <el-col :span="24" />
+          <el-col :span="24">
+            <ebook-upload />
+          </el-col>
           <el-col />
         </el-row>
       </div>
@@ -18,9 +20,10 @@
 <script>
 
 import Sticky from '../../../components/Sticky/index'
+import EbookUpload from '../../../components/EbookUpload'
 import Warning from './Warning'
 export default {
-  components: { Sticky, Warning },
+  components: { Sticky, Warning, EbookUpload },
   props: {
     isEdit: Boolean
   },
