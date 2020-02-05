@@ -9,7 +9,12 @@
         <el-row>
           <warning />
           <el-col :span="24">
-            <ebook-upload />
+            <ebook-upload
+              :file-list="fileList"
+              :disabled="isEdit"
+              @onSuccess="onUploadSuccess"
+              @onRemove="onUploadRemove"
+            />
           </el-col>
           <el-col />
         </el-row>
@@ -32,7 +37,8 @@ export default {
       loading: false,
       postForm: {
         status: 'draft'
-      }
+      },
+      fileList: []
     }
   },
   methods: {
@@ -44,6 +50,12 @@ export default {
     },
     showGuide() {
       console.log('show guide ...')
+    },
+    onUploadSuccess() {
+      console.log('onUploadSuccess')
+    },
+    onUploadRemove() {
+      console.log('onUploadRemove')
     }
   }
 }
