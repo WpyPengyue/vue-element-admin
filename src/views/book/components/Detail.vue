@@ -27,12 +27,12 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="作者:" :label-width="labelWidth">
-              <el-input v-model="postForm.auth" placeholder="作者" />
+              <el-input v-model="postForm.author" placeholder="作者" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="出版社:" :label-width="labelWidth">
-              <el-input v-model="postForm.auth" placeholder="出版社" />
+              <el-input v-model="postForm.publisher" placeholder="出版社" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -128,8 +128,43 @@ export default {
     showGuide() {
       console.log('show guide ...')
     },
-    onUploadSuccess() {
-      console.log('onUploadSuccess')
+    setData(data) {
+      const {
+        title,
+        author,
+        publisher,
+        language,
+        rootFile,
+        cover,
+        url,
+        originalName,
+        contents,
+        fileName,
+        coverPath,
+        filePath,
+        unzipPath
+      } = data
+      this.postForm = {
+        ...this.postForm,
+        title,
+        author,
+        publisher,
+        language,
+        rootFile,
+        cover,
+        url,
+        originalName,
+        contents,
+        fileName,
+        coverPath,
+        filePath,
+        unzipPath
+      }
+      console.log('postForm', this.postForm)
+    },
+    onUploadSuccess(data) {
+      console.log('onUploadSuccess', data)
+      this.setData(data)
     },
     onUploadRemove() {
       console.log('onUploadRemove')
