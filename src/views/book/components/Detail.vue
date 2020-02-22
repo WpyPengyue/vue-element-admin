@@ -86,7 +86,7 @@
           <el-col :span="24">
             <el-form-item :label-width="labelWidth" label="目录:">
               <div v-if="postForm.contents && postForm.contents.length > 0" class="contents-wrapper">
-                <el-tree />
+                <el-tree :data="contentsTree" @node-click="onContentlick" />
               </div>
               <span v-else>无</span>
             </el-form-item>
@@ -115,10 +115,16 @@ export default {
         status: 'draft'
       },
       fileList: [],
-      labelWidth: '120px'
+      labelWidth: '120px',
+      contentsTree: []
     }
   },
   methods: {
+    onContentlick(data) {
+      if (data.text) {
+        window.open(data.text)
+      }
+    },
     submitForm() {
       this.loading = true
       setTimeout(() => {
@@ -139,6 +145,7 @@ export default {
         url,
         originalName,
         contents,
+        contentsTree,
         fileName,
         coverPath,
         filePath,
@@ -155,11 +162,13 @@ export default {
         url,
         originalName,
         contents,
+        contentsTree,
         fileName,
         coverPath,
         filePath,
         unzipPath
       }
+      this.contentsTree = contentsTree
       console.log('postForm', this.postForm)
     },
     onUploadSuccess(data) {
