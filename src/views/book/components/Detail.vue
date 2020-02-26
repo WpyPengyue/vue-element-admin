@@ -102,6 +102,7 @@ import Sticky from '../../../components/Sticky/index'
 import EbookUpload from '../../../components/EbookUpload'
 import Warning from './Warning'
 import MdInput from '../../../components/MDinput/index'
+import { createBook } from '../../../api/book'
 
 const defaultForm = {
   title: '',
@@ -168,7 +169,17 @@ export default {
         this.loading = true
         this.$refs.postForm.validate((valid, fields) => {
           // console.log('validate', valid, fields)
-          if (!valid) {
+          if (valid) {
+            const book = Object.assign({}, this.postForm)
+            delete book.contents
+            delete book.contentsTree
+            if (this.isEdit) {
+              // updateBook()
+            } else {
+              createBook(book)
+            }
+            console.log('book', book)
+          } else {
             const message = fields[Object.keys(fields)[0]][0].message
             this.$message({ message, type: 'error' })
             this.loading = false
